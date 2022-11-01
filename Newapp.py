@@ -31,7 +31,8 @@ class Test1(Screen):
         signal = np.array(signal)
         # print(signal)
         # this will plot the signal on graph
-        plt.plot(month, signal, color = 'red')
+        plt.style.use('dark_background')
+        plt.bar(month, signal, width=0.5, color = 'purple')
 
 
         # setting x label
@@ -39,7 +40,8 @@ class Test1(Screen):
         plt.ylabel('salary')
 
         plt.colorbar(mpl.cm.ScalarMappable())
-        plt.grid(True, color = 'green')
+
+
 
         # adding plot to kivy boxlayout
         self.ids.layout.add_widget(FigureCanvasKivyAgg(plt.gcf()))
