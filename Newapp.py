@@ -52,13 +52,24 @@ class Test1(Screen):
 class Shedule(Screen):
     def __init__(self, **kwargs):
         super(Shedule, self).__init__(**kwargs)
-        width = self.right-30-self.right*0.01
-        print(width)
-        with self.canvas:
-            for i in range(1, 13):
-                Point(points = ((width*0.99/12 + 30)*i*2, self.y +30), pointsize = 5)
-            for i in range(1, 13):
-                Point(points = (self.x +30, (((self.top*0.8)/12)+30)*i), pointsize = 5)
+
+        signal = [0, 1350, 850, 1000, 1000, 980, 1100, 1000, 1000, 980, 1100, 1000, ]
+        month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        signal = np.array(signal)
+        # print(signal)
+        # this will plot the signal on graph
+        plt.style.use('dark_background')
+        plt.bar(month, signal, width=0.5, color='purple')
+
+        # setting x label
+        plt.xlabel('Month')
+        plt.ylabel('salary')
+
+        plt.colorbar(mpl.cm.ScalarMappable())
+
+        # adding plot to kivy boxlayout
+        self.ids.layout.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+
 
 class Menu(Screen):
     pass
