@@ -1,0 +1,88 @@
+
+<Test1>:
+    BoxLayout:
+        layout:layout
+        BoxLayout:
+            id:layout
+
+
+<Shedule>:
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            size_hint: 1,0.2
+            text:"Menu"
+            background_color: 0,1,1
+            on_press: root.manager.current = "menu"
+        BoxLayout:
+            layout:layout
+            BoxLayout:
+                id:layout
+
+
+<Menu>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: root.top/10
+        spacing: 15
+        Button:
+            text: "Win1"
+            background_color: 1,0,1,1
+            on_press: root.manager.current = "window1"
+        Button:
+            text: "Shedule"
+            color: 1,0,1,1
+            on_press: root.manager.current = "shedule"
+        Button:
+            text: "Win1"
+            color: 1,0,1,1
+            on_press: root.manager.current = "test1"
+
+
+<Window1>:
+
+    BoxLayout:
+        BoxLayout:
+            padding: root.top/10
+            orientation:"vertical"
+            size_hint:0.15,1
+
+            Label:
+                text:"Month"
+            Label:
+                text:"Value hour"
+            Label:
+                text:"Salary"
+            Widget:
+                size_hint:1,5
+
+        BoxLayout:
+            padding: root.top/10
+            spacing: 15
+            orientation: "vertical"
+
+            Spinner:
+                id: inp1
+                text:"Month"
+                values: ['Janury','February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                on_text: root.spinner_clicked(inp1.text)
+
+            TextInput:
+                id: inp2
+                input_filter: 'float'
+            TextInput:
+                id: inp3
+                input_filter: 'float'
+            Widget:
+                size_hint:1,4
+                Label:
+                    id: Err_mess
+            Button:
+                text: "Save"
+                on_press: root.save(inp1,inp2,inp3)
+            Button:
+                size_hint: 0.2,1
+                text:"Menu"
+                background_color: 0,1,1
+                on_press: root.manager.current = "menu"
+
