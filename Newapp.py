@@ -9,7 +9,7 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.spinner import Spinner
 from kivy.graphics import Line, Point
 from matplotlib import pyplot as plt
-
+import os.path
 import numpy as np
 from kivy.garden.matplotlib import FigureCanvasKivyAgg
 
@@ -59,7 +59,8 @@ class Shedule(Screen):
         # print(signal)
         # this will plot the signal on graph
         plt.style.use('dark_background')
-        plt.bar(month, signal, width=0.5, color='purple')
+        plt.bar(month, signal, width=0.4, color='purple')
+
 
         # setting x label
         plt.xlabel('Month')
@@ -92,6 +93,12 @@ class Window1(Screen):
 
 class MyApp(App):
     def build(self):
+        if os.path.exists('data.json') == False:
+            with open('data.json', 'a') as f:
+                month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+                for m in month:
+                    data = {m:[0,0]}
+                    json.dump(data,f)
         sm = ScreenManager()
         sm.add_widget(Menu(name = "menu"))
         sm.add_widget(Window1(name = "window1"))
