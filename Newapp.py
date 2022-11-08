@@ -25,10 +25,14 @@ class Test1(Screen):
    def __init__(self,**kwargs):
         super(Test1, self).__init__(**kwargs)
 
-
-        signal = [0, 1350, 850, 1000,1000, 980, 1100, 1000,1000, 980, 1100, 1000,]
+        with open('data.json', 'r') as f:
+            templates = json.load(f)
+        salary = []
+        month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        for i in month:
+            salary.append(templates[i][1])
         month = ['Jan','Feb','Mar', 'Apr',  'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-        signal = np.array(signal)
+        signal = np.array(salary)
         # print(signal)
         # this will plot the signal on graph
         plt.style.use('dark_background')
@@ -52,14 +56,18 @@ class Test1(Screen):
 class Shedule(Screen):
     def __init__(self, **kwargs):
         super(Shedule, self).__init__(**kwargs)
-
-        signal = [0, 1350, 850, 1000, 1000, 980, 1100, 1000, 1000, 980, 1100, 1000, ]
+    def show(self):
+        with open('data.json', 'r') as f:
+            templates = json.load(f)
+        salary = []
         month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-        signal = np.array(signal)
-        # print(signal)
-        # this will plot the signal on graph
+        for i in month:
+            salary.append(templates[i][1])
+
+        signal = np.array(salary)
+        print(salary)
         plt.style.use('dark_background')
-        plt.bar(month, signal, width=0.4, color='purple')
+        plt.bar(month, salary, width=0.4, color='purple')
 
 
         # setting x label
@@ -79,13 +87,17 @@ class Window1(Screen):
 
     def save(self, inp1,inp2,inp3):
         if inp1.text != 'Month':
-
-            with open('data.json', 'a') as f:
-                data = {inp1.text:[inp2.text, inp3.text]}
-                json.dump(data, f)
+            with open('data.json', 'r') as f:
+                file = json.load(f)
+            file[inp1.text] = [int(inp2.text), int(inp3.text)]
+            with open('data.json', 'w') as f:
+                json.dump(file, f)
             self.ids.Err_mess.text = "Successfull"
+            with open('data.json', 'r') as f:
+                print(json.load(f))
         else:
             self.ids.Err_mess.text = "False"
+
 
     def spinner_clicked(self, values):
         self.ids.inp1.text = values
@@ -96,9 +108,10 @@ class MyApp(App):
         if os.path.exists('data.json') == False:
             with open('data.json', 'a') as f:
                 month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+                data = {}
                 for m in month:
-                    data = {m:[0,0]}
-                    json.dump(data,f)
+                    data.update({m:[0,0]})
+                json.dump(data,f)
         sm = ScreenManager()
         sm.add_widget(Menu(name = "menu"))
         sm.add_widget(Window1(name = "window1"))
