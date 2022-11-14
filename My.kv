@@ -1,9 +1,16 @@
 
 <Test1>:
     BoxLayout:
-        layout:layout
+        orientation: 'vertical'
+        Button:
+            size_hint: 1,0.2
+            text:"Menu"
+            background_color: 0,1,1
+            on_press: root.manager.current = "menu"
         BoxLayout:
-            id:layout
+            layout1:layout1
+            BoxLayout:
+                id:layout1
 
 
 <Shedule>:
@@ -14,11 +21,11 @@
             text:"Menu"
             background_color: 0,1,1
             on_press: root.manager.current = "menu"
-        Button:
-            size_hint: 1,0.2
-            text:"Show graphics"
-            background_color: 0,1,1
-            on_press:root.show()
+#        Button:
+#            size_hint: 1,0.2
+#            text:"Show graphics"
+#            background_color: 0,1,1
+#            on_press:root.show()
         BoxLayout:
             layout:layout
             BoxLayout:
@@ -39,7 +46,7 @@
             color: 1,0,1,1
             on_press: root.manager.current = "shedule"
         Button:
-            text: "Win1"
+            text: "hour"
             color: 1,0,1,1
             on_press: root.manager.current = "test1"
 

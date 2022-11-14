@@ -22,61 +22,49 @@ import matplotlib as mpl
 import json
 
 class Test1(Screen):
-   def __init__(self,**kwargs):
-        super(Test1, self).__init__(**kwargs)
+    def on_enter(self, *args):
+        plt.close()
+
+        self.ids.layout1.clear_widgets()
 
         with open('data.json', 'r') as f:
             templates = json.load(f)
-        salary = []
-        month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-        for i in month:
-            salary.append(templates[i][1])
-        month = ['Jan','Feb','Mar', 'Apr',  'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-        signal = np.array(salary)
-        # print(signal)
-        # this will plot the signal on graph
+        self.salary = []
+        self.month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        for i in self.month:
+            self.salary.append(templates[i][1]/templates[i][0])
+
+        signal = np.array(self.salary)
+        print(self.salary)
         plt.style.use('dark_background')
-        plt.bar(month, signal, width=0.5, color = 'purple')
+        plt.bar(self.month, signal, width=0.4, color='green')
 
-
-        # setting x label
         plt.xlabel('Month')
-        plt.ylabel('salary')
+        plt.ylabel('salary/hour')
 
-        plt.colorbar(mpl.cm.ScalarMappable())
-
-
-
-        # adding plot to kivy boxlayout
-        self.ids.layout.add_widget(FigureCanvasKivyAgg(plt.gcf()))
-
-
+        self.ids.layout1.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
 
 class Shedule(Screen):
-    def __init__(self, **kwargs):
-        super(Shedule, self).__init__(**kwargs)
-    def show(self):
+
+    def on_enter(self, *args):
+        plt.close()
+        self.ids.layout.clear_widgets()
         with open('data.json', 'r') as f:
             templates = json.load(f)
-        salary = []
-        month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-        for i in month:
-            salary.append(templates[i][1])
+        self.salary = []
+        self.month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        for i in self.month:
+            self.salary.append(templates[i][1])
 
-        signal = np.array(salary)
-        print(salary)
+        signal = np.array(self.salary)
+        print(self.salary)
         plt.style.use('dark_background')
-        plt.bar(month, salary, width=0.4, color='purple')
+        plt.bar(self.month, self.salary, width=0.4, color='purple')
 
-
-        # setting x label
         plt.xlabel('Month')
         plt.ylabel('salary')
 
-        plt.colorbar(mpl.cm.ScalarMappable())
-
-        # adding plot to kivy boxlayout
         self.ids.layout.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
 
@@ -99,6 +87,7 @@ class Window1(Screen):
             self.ids.Err_mess.text = "False"
 
 
+
     def spinner_clicked(self, values):
         self.ids.inp1.text = values
 
@@ -118,6 +107,7 @@ class MyApp(App):
         sm.add_widget((Shedule(name = 'shedule')))
         sm.add_widget(Test1(name = "test1"))
         return sm
-
+    def change_screen(self, screen_name):
+        self.root.current = screen_name
 if __name__ == "__main__":
     MyApp().run()
