@@ -7,7 +7,8 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.dropdown import DropDown
 from kivy.uix.spinner import Spinner
-from kivy.graphics import Line, Point
+from kivy.graphics import Line, Point, RoundedRectangle, Ellipse
+
 from matplotlib import pyplot as plt
 import os.path
 import numpy as np
@@ -32,13 +33,15 @@ class Test1(Screen):
         self.salary = []
         self.month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         for i in self.month:
-            self.salary.append(templates[i][1]/templates[i][0])
-
+            if templates[i][0] != 0:
+                self.salary.append(templates[i][1]/templates[i][0])
+            else:
+                self.salary.append(templates[i][1])
         signal = np.array(self.salary)
         print(self.salary)
         plt.style.use('dark_background')
         plt.bar(self.month, signal, width=0.4, color='green')
-
+        plt.colorbar(mpl.cm.ScalarMappable())
         plt.xlabel('Month')
         plt.ylabel('salary/hour')
 
@@ -61,7 +64,7 @@ class Shedule(Screen):
         print(self.salary)
         plt.style.use('dark_background')
         plt.bar(self.month, self.salary, width=0.4, color='purple')
-
+        plt.colorbar(mpl.cm.ScalarMappable())
         plt.xlabel('Month')
         plt.ylabel('salary')
 
@@ -73,8 +76,8 @@ class Menu(Screen):
 
 class Window1(Screen):
 
-    def save(self, inp1,inp2,inp3):
-        if inp1.text != 'Month':
+    def save(self, year, inp1,inp2,inp3):
+        if inp1.text != 'Month' and year.text != 'Year' and inp2 and inp3:
             with open('data.json', 'r') as f:
                 file = json.load(f)
             file[inp1.text] = [int(inp2.text), int(inp3.text)]
@@ -88,7 +91,8 @@ class Window1(Screen):
 
 
 
-    def spinner_clicked(self, values):
+    def spinner_clicked(self, values, values1):
+        self.ids.year.text = values1
         self.ids.inp1.text = values
 
 
