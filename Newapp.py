@@ -8,6 +8,9 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.dropdown import DropDown
 from kivy.uix.spinner import Spinner
 from kivy.graphics import Line, Point, RoundedRectangle, Ellipse
+from kivy_gradient import Gradient
+from kivy.utils import get_color_from_hex
+
 
 from matplotlib import pyplot as plt
 import os.path
@@ -49,8 +52,9 @@ class Test1(Screen):
 
 
 class Shedule(Screen):
-
-    def on_enter(self, *args):
+    def enter_year(self, values):
+        self.ids.year.text = values
+        print(values)
         plt.close()
         self.ids.layout.clear_widgets()
         with open('data.json', 'r') as f:
@@ -58,7 +62,7 @@ class Shedule(Screen):
         self.salary = []
         self.month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         for i in self.month:
-            self.salary.append(templates[i][1])
+            self.salary.append(templates[values][i][1])
 
         signal = np.array(self.salary)
         print(self.salary)
@@ -80,7 +84,8 @@ class Window1(Screen):
         if inp1.text != 'Month' and year.text != 'Year' and inp2 and inp3:
             with open('data.json', 'r') as f:
                 file = json.load(f)
-            file[inp1.text] = [int(inp2.text), int(inp3.text)]
+            inp1.text = [int(inp2.text), int(inp3.text)]
+            file[year.text] = {inp1.text }
             with open('data.json', 'w') as f:
                 json.dump(file, f)
             self.ids.Err_mess.text = "Successfull"
@@ -91,19 +96,26 @@ class Window1(Screen):
 
 
 
-    def spinner_clicked(self, values, values1):
-        self.ids.year.text = values1
-        self.ids.inp1.text = values
+    def spinner_clicked(self, values, id=None):
+        if id == 'year':
+            self.ids.year.text = values
+        else:
+            self.ids.inp1.text = values
 
 
 class MyApp(App):
     def build(self):
         if os.path.exists('data.json') == False:
             with open('data.json', 'a') as f:
+                year = ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031']
                 month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
                 data = {}
+                year_dict = {}
                 for m in month:
-                    data.update({m:[0,0]})
+                    year_dict.update({m: [0, 0]})
+                for y in year:
+                    data.update({y:year_dict})
+                    # data.update({m:[0,0]})
                 json.dump(data,f)
         sm = ScreenManager()
         sm.add_widget(Menu(name = "menu"))

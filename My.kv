@@ -1,3 +1,5 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import Gradient kivy_gradient.Gradient
 <Test1>:
     BoxLayout:
         orientation: 'vertical'
@@ -20,6 +22,12 @@
             text:"Menu"
             background_color: 0,1,1
             on_press: root.manager.current = "menu"
+        Spinner:
+            id: year
+            size_hint: 1,0.2
+            text:"Year"
+            values: ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031']
+            on_text: root.enter_year(year.text)
 #        Button:
 #            size_hint: 1,0.2
 #            text:"Show graphics"
@@ -32,38 +40,76 @@
 
 
 <Menu>:
-#    BoxLayout:
-#        orientation: "vertical"
-#        padding: root.top/10
-#        spacing: 15
+
     Label:
+
         canvas:
+#            Rectangle:
+#                size:root.width, root.height
+#                texture:
+#                    Gradient.horizontal(
+#                    get_color_from_hex("E91E63"),
+#                    get_color_from_hex("FCE4EC"),
+#                    get_color_from_hex("2962FF")
+#                    )
             Color:
-                rgba:1,0,1,0.345
+                rgba:219/255, 42/255, 145/255,1
 
-            Ellipse:
-                pos: root.center_x-20 ,root.top-root.top/3-20
-                size: 140,140
-
-
-        Button:
+            Line:
+                points: root.center_x,root.center_y, root.center_x + root.height/8 ,root.top-root.top/3+root.height/8
+                width: 7
+            Line:
+                points: root.center_x,root.center_y,root.center_x/4+50,root.center_y/2+50
+                width: 7
+            Line:
+                points: root.center_x,root.center_y,root.center_x*1.2+50,root.center_y/2+50
+                width: 7
+                texture:
+                    Gradient.horizontal(
+                    get_color_from_hex("E91E63"),
+                    get_color_from_hex("FCE4EC"),
+                    get_color_from_hex("2962FF")
+                    )
+            Color:
+                rgba: 12/255, 0, 143/255,0.8
+            Rectangle:
+                size:root.width, root.height
+                texture:
+                    Gradient.horizontal(
+                    get_color_from_hex("4b1670"),
+                    get_color_from_hex("4b167060"),
+                    get_color_from_hex("4b1670"),
+                    get_color_from_hex("4b167060"),
+                    get_color_from_hex("4b1670")
+                    )
+#            Rectangle:
+#                pos:100,100
+#                size:500,500
+#                texture:
+#                    Gradient.vertical(
+#                    get_color_from_hex("E91E63"),
+#
+#                    get_color_from_hex("2962FF")
+#                    )
+        RoundedButton:
             pos: root.center_x ,root.top-root.top/3
             text: "Win1"
-            size: 100,100
-            background_color: 1,0,1,0.5
+            size: root.height/4,root.height/4
+#            background_color: 1,0,1,1
+#            background_normal:''
             on_press: root.manager.current = "window1"
 
-        Button:
-            pos: 300,10
+        RoundedButton:
+            pos: root.center_x/4,root.center_y/2
             size: 100,100
             text: "Shedule"
-            color: 1,0,1,1
+#            color: 1,0,1,1
             on_press: root.manager.current = "shedule"
-        Button:
-            pos: 100,10
+        RoundedButton:
+            pos: root.center_x*1.2,root.center_y/2
             size: 100,100
             text: "hour"
-            color: 1,0,1,1
+#            color: 1,0,1,1
             on_press: root.manager.current = "test1"
 
 
@@ -92,8 +138,8 @@
             Spinner:
                 id: year
                 text:"Year"
-                values1: ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031']
-                on_text: root.spinner_clicked(year.text)
+                values: ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031']
+                on_text: root.spinner_clicked(year.text,'year')
             Spinner:
                 id: inp1
                 text:"Month"
@@ -118,3 +164,21 @@
                 text:"Menu"
                 background_color: 0,1,1
                 on_press: root.manager.current = "menu"
+
+<RoundedButton@Button>:
+    background_color: 1,0,1,0
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: 118/255, 16/255, 227/255,1
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [500]
+            texture:
+                Gradient.vertical(
+                get_color_from_hex("971af0"),
+                get_color_from_hex("4b1670"),
+                get_color_from_hex("13021f")
+                )
+
