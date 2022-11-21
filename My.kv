@@ -8,6 +8,13 @@
             text:"Menu"
             background_color: 0,1,1
             on_press: root.manager.current = "menu"
+        Spinner:
+            id: year
+            size_hint: 1,0.1
+
+            text:"Year"
+            values: ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031']
+            on_text: root.enter_year(year.text)
         BoxLayout:
             layout1:layout1
             BoxLayout:
@@ -20,7 +27,7 @@
         Button:
             size_hint: 1,0.2
             text:"Menu"
-            background_color: 0,1,1
+            background_color: 0,1,1,1
             on_press: root.manager.current = "menu"
         Spinner:
             id: year
@@ -54,7 +61,7 @@
 #                    get_color_from_hex("2962FF")
 #                    )
             Color:
-                rgba:219/255, 42/255, 145/255,1
+                rgba:224/255, 7/255, 21/255,1
 
             Line:
                 points: root.center_x,root.center_y, root.center_x + root.height/8 ,root.top-root.top/3+root.height/8
@@ -72,7 +79,7 @@
                     get_color_from_hex("2962FF")
                     )
             Color:
-                rgba: 12/255, 0, 143/255,0.8
+                rgba: 179/255, 9/255, 164/255,0.9
             Rectangle:
                 size:root.width, root.height
                 texture:

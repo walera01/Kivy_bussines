@@ -8,6 +8,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.dropdown import DropDown
 from kivy.uix.spinner import Spinner
 from kivy.graphics import Line, Point, RoundedRectangle, Ellipse
+
 from kivy_gradient import Gradient
 from kivy.utils import get_color_from_hex
 
@@ -28,6 +29,8 @@ import json
 class Test1(Screen):
     def on_enter(self, *args):
         plt.close()
+    def enter_year(self, values):
+        plt.close()
 
         self.ids.layout1.clear_widgets()
 
@@ -36,10 +39,10 @@ class Test1(Screen):
         self.salary = []
         self.month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
         for i in self.month:
-            if templates[i][0] != 0:
-                self.salary.append(templates[i][1]/templates[i][0])
+            if templates[values][i][0] != 0:
+                self.salary.append(templates[values][i][1]/templates[values][i][0])
             else:
-                self.salary.append(templates[i][1])
+                self.salary.append(templates[values][i][1])
         signal = np.array(self.salary)
         print(self.salary)
         plt.style.use('dark_background')
@@ -52,6 +55,8 @@ class Test1(Screen):
 
 
 class Shedule(Screen):
+    def on_enter(self, *args):
+        plt.close()
     def enter_year(self, values):
         self.ids.year.text = values
         print(values)
@@ -84,8 +89,8 @@ class Window1(Screen):
         if inp1.text != 'Month' and year.text != 'Year' and inp2 and inp3:
             with open('data.json', 'r') as f:
                 file = json.load(f)
-            inp1.text = [int(inp2.text), int(inp3.text)]
-            file[year.text] = {inp1.text }
+            # inp1.text = [int(inp2.text), int(inp3.text)]
+            file[year.text][inp1.text] = [float(inp2.text), float(inp3.text)]
             with open('data.json', 'w') as f:
                 json.dump(file, f)
             self.ids.Err_mess.text = "Successfull"
