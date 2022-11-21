@@ -8,7 +8,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.dropdown import DropDown
 from kivy.uix.spinner import Spinner
 from kivy.graphics import Line, Point, RoundedRectangle, Ellipse
-
+import datetime
 from kivy_gradient import Gradient
 from kivy.utils import get_color_from_hex
 
@@ -29,11 +29,13 @@ import json
 class Test1(Screen):
     def on_enter(self, *args):
         plt.close()
-    def enter_year(self, values):
-        plt.close()
-
+        self.ids.year.text = '2022'
         self.ids.layout1.clear_widgets()
-
+        self.enter_year()
+    def enter_year(self, values = str(datetime.datetime.now().year)):
+        plt.close()
+        print(values)
+        self.ids.layout1.clear_widgets()
         with open('data.json', 'r') as f:
             templates = json.load(f)
         self.salary = []
@@ -57,10 +59,14 @@ class Test1(Screen):
 class Shedule(Screen):
     def on_enter(self, *args):
         plt.close()
-    def enter_year(self, values):
-        self.ids.year.text = values
-        print(values)
+        self.ids.year.text = '2022'
+        self.ids.layout.clear_widgets()
+        self.enter_year()
+    def enter_year(self, values = '2022'):
+
         plt.close()
+        self.ids.layout.clear_widgets()
+        self.ids.year.text = values
         self.ids.layout.clear_widgets()
         with open('data.json', 'r') as f:
             templates = json.load(f)
