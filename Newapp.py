@@ -1,3 +1,5 @@
+import time
+
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen, ScreenManager
@@ -7,7 +9,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.dropdown import DropDown
 from kivy.uix.spinner import Spinner
-from kivy.graphics import Line, Point, RoundedRectangle, Ellipse
+from kivy.graphics import Line, Point, RoundedRectangle, Ellipse,Rectangle
 import datetime
 from kivy_gradient import Gradient
 from kivy.utils import get_color_from_hex
@@ -26,6 +28,17 @@ import matplotlib as mpl
 
 import json
 
+
+
+class Test2(Screen):
+    def on_enter(self, *args):
+        print(self.ids["three2"])
+        print(self.width,"++++")
+        for i in range(int(self.width), 0 ,-1):
+            time.sleep(0.4)
+            self.ids['three2'].pos = [i,100]
+            print(self.ids['three2'].pos)
+
 class Test1(Screen):
     def on_enter(self, *args):
         plt.close()
@@ -34,7 +47,7 @@ class Test1(Screen):
         self.enter_year()
     def enter_year(self, values = str(datetime.datetime.now().year)):
         plt.close()
-        print(values)
+
         self.ids.layout1.clear_widgets()
         with open('data.json', 'r') as f:
             templates = json.load(f)
@@ -46,7 +59,7 @@ class Test1(Screen):
             else:
                 self.salary.append(templates[values][i][1])
         signal = np.array(self.salary)
-        print(self.salary)
+
         plt.style.use('dark_background')
         plt.bar(self.month, signal, width=0.4, color='green')
         plt.colorbar(mpl.cm.ScalarMappable())
@@ -133,6 +146,7 @@ class MyApp(App):
         sm.add_widget(Window1(name = "window1"))
         sm.add_widget((Shedule(name = 'shedule')))
         sm.add_widget(Test1(name = "test1"))
+        sm.add_widget(Test2(name = "test2"))
         return sm
     def change_screen(self, screen_name):
         self.root.current = screen_name

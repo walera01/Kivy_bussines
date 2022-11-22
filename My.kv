@@ -1,5 +1,34 @@
 #:import get_color_from_hex kivy.utils.get_color_from_hex
 #:import Gradient kivy_gradient.Gradient
+
+<Test2>:
+#    Label:
+#        canvas:
+#            Color:
+#                rgba:1,1,1,1
+#            Line:
+#                points:0,99,root.width,99
+#                width:1
+#            Rectangle:
+#                size: 50, 50
+#                pos: 100,100
+#            Rectangle:
+#                id: three
+#                size: 4,20
+#                pos: root.width, 100
+
+    Label:
+        id: three2
+        size: 200,500
+        pos: root.width, 100
+        canvas:
+            Color:
+                rgba:1,1,1,1
+            Rectangle:
+                size: 200,500
+                pos:self.pos
+
+
 <Test1>:
     BoxLayout:
         orientation: 'vertical'
@@ -50,7 +79,7 @@
 <Menu>:
 
     Label:
-
+        background_image:"img.png"
         canvas:
 #            Rectangle:
 #                size:root.width, root.height
@@ -79,17 +108,18 @@
                     get_color_from_hex("2962FF")
                     )
             Color:
-                rgba: 179/255, 9/255, 164/255,0.9
+                rgba: 179/255, 9/255, 164/255,0.8
             Rectangle:
-                size:root.width, root.height
-                texture:
-                    Gradient.horizontal(
-                    get_color_from_hex("4b1670"),
-                    get_color_from_hex("4b167060"),
-                    get_color_from_hex("4b1670"),
-                    get_color_from_hex("4b167060"),
-                    get_color_from_hex("4b1670")
-                    )
+                size: 800, 1000
+                source:"img.png"
+#                texture:
+#                    Gradient.horizontal(
+#                    get_color_from_hex("4b1670"),
+#                    get_color_from_hex("4b167060"),
+#                    get_color_from_hex("4b1670"),
+#                    get_color_from_hex("4b167060"),
+#                    get_color_from_hex("4b1670")
+#                    )
 #            Rectangle:
 #                pos:100,100
 #                size:500,500
@@ -99,6 +129,7 @@
 #
 #                    get_color_from_hex("2962FF")
 #                    )
+        background_image:"img.png"
         RoundedButton:
             pos: root.center_x ,root.top-root.top/3
             text: "Win1"
@@ -119,6 +150,12 @@
             text: "hour"
 #            color: 1,0,1,1
             on_press: root.manager.current = "test1"
+        RoundedButton:
+            pos: root.center_x*0.5,root.center_y*1.4
+            size: 100,100
+            text: "HZ"
+#            color: 1,0,1,1
+            on_press: root.manager.current = "test2"
 
 
 <Window1>:
