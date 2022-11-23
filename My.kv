@@ -2,32 +2,46 @@
 #:import Gradient kivy_gradient.Gradient
 
 <Test2>:
-#    Label:
-#        canvas:
-#            Color:
-#                rgba:1,1,1,1
-#            Line:
-#                points:0,99,root.width,99
-#                width:1
-#            Rectangle:
-#                size: 50, 50
-#                pos: 100,100
-#            Rectangle:
-#                id: three
-#                size: 4,20
-#                pos: root.width, 100
 
     Label:
-        id: three2
-        size: 200,500
-        pos: root.width, 100
         canvas:
             Color:
                 rgba:1,1,1,1
-            Rectangle:
-                size: 200,500
-                pos:self.pos
+            Line:
+                points:0,99,root.width,99
+                width:1
+            Line:
+                points:0,401,root.width,401
+                width:1
 
+
+    Label:
+        id: three2
+        size: 20,5
+        pos: root.width-50, 100
+
+        canvas:
+            Color:
+                rgba:1,1,1,1
+            Triangle:
+                points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+60,self.pos[0]+40,self.pos[1]
+    Label:
+        id:person
+        rot: 45
+        pos:100,100
+        size: 50,50
+        canvas:
+            Color:
+                rgba:1,1,1,1
+            Rotate:
+                angle:45
+            Rectangle:
+                size: 50, 50
+                pos: self.pos
+    Button:
+        size:root.width, root.top
+        background_color: 1,1,1,0
+        on_press: root.jump()
 
 <Test1>:
     BoxLayout:

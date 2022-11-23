@@ -1,6 +1,8 @@
 import time
+from random import randint
 
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.boxlayout import BoxLayout
@@ -9,7 +11,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.dropdown import DropDown
 from kivy.uix.spinner import Spinner
-from kivy.graphics import Line, Point, RoundedRectangle, Ellipse,Rectangle
+from kivy.graphics import Line, Point, RoundedRectangle, Ellipse,Rectangle, Triangle
 import datetime
 from kivy_gradient import Gradient
 from kivy.utils import get_color_from_hex
@@ -31,14 +33,34 @@ import json
 
 
 class Test2(Screen):
+    def __init__(self,**kwargs):
+        super(Test2, self).__init__(**kwargs)
+        self.vector = True
     def on_enter(self, *args):
-        print(self.ids["three2"])
-        print(self.width,"++++")
-        for i in range(int(self.width), 0 ,-1):
-            time.sleep(0.4)
-            self.ids['three2'].pos = [i,100]
-            print(self.ids['three2'].pos)
+        print(self.ids["three2"].pos[0])
+        Clock.schedule_interval(self.move, 1.0 / 60.0)
+    def move(self, fps):
+        if self.ids['three2'].pos[0] <= -10:
+            self.ids['three2'].pos[0] = randint(self.width,self.width+40)
+        self.ids['three2'].pos[0] -= 1.5
+    def jump(self):
+        if self.vector:
+            Clock.schedule_interval(self.up, 1.0 / 60.0)
+        else:
+            Clock.schedule_interval(self.down, 1.0 / 60.0)
 
+    def up(self, time):
+        if self.ids['person'].pos[1] < 350:
+            self.ids['person'].pos[1] += 5
+        else:
+            self.vector = False
+            return False
+    def down(self, time):
+        if self.ids['person'].pos[1] >= 101:
+            self.ids['person'].pos[1] -= 5
+        else:
+            self.vector = True
+            return False
 class Test1(Screen):
     def on_enter(self, *args):
         plt.close()
@@ -147,6 +169,7 @@ class MyApp(App):
         sm.add_widget((Shedule(name = 'shedule')))
         sm.add_widget(Test1(name = "test1"))
         sm.add_widget(Test2(name = "test2"))
+
         return sm
     def change_screen(self, screen_name):
         self.root.current = screen_name
