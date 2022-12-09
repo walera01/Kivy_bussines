@@ -36,13 +36,19 @@ class Test2(Screen):
     def __init__(self,**kwargs):
         super(Test2, self).__init__(**kwargs)
         self.vector = True
+        self.stop = True
     def on_enter(self, *args):
         print(self.ids["three2"].pos[0])
         Clock.schedule_interval(self.move, 1.0 / 60.0)
     def move(self, fps):
+
         if self.ids['three2'].pos[0] <= -10:
             self.ids['three2'].pos[0] = randint(self.width,self.width+40)
         self.ids['three2'].pos[0] -= 1.5
+        # if self.ids['person'].collide_widget(self.ids['three2']):
+        #     self.buuff(self.ids['three2'])
+        #     return self.stop
+
     def jump(self):
         if self.vector:
             Clock.schedule_interval(self.up, 1.0 / 60.0)
@@ -61,6 +67,16 @@ class Test2(Screen):
         else:
             self.vector = True
             return False
+    def buuff(self, three):
+        self.stop = False
+        Clock.schedule_interval(self.fall, 1.0 / 60.0)
+    def fall(self,fps):
+        self.ids['person'].pos[1] -=5
+        if self.ids['person'].pos[1] <= 0:
+            print(self.ids['person'].pos, "   ", self.ids['three2'].pos)
+            self.stop = True
+            return False
+
 class Test1(Screen):
     def on_enter(self, *args):
         plt.close()

@@ -1,0 +1,86 @@
+<Game>:
+# Персонаж
+    Widget:
+        id: person
+        size: 25,25
+        pos: 50,50
+        background_color: 1,1,1,1
+        rotate:0
+        canvas:
+            Color:
+                rgba: 1,1,1,1
+            Rotate:
+                angle: self.rotate
+                origin: self.center
+            Rectangle:
+                size: 25,25
+                pos: self.pos
+            Rotate:
+                angle: 360-self.rotate
+                origin: self.center
+# Границы поля
+    Widget:
+        id: pole
+        canvas:
+            Color:
+                rgba:1,1,1,1
+            Line:
+                points: 0, 50,root.width, 50
+            Line:
+                points: 0, 525,root.width, 525
+
+    Label:
+        id: stons
+        Label:
+            id: stone
+            size: 50,25
+            pos: 500,50
+
+            canvas:
+                Color:
+                    rgba: 1,1,1,1
+
+                Triangle:
+                    points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+60,self.pos[0]+40,self.pos[1]
+                Triangle:
+                    points:self.pos[0]*,self.pos[1],self.pos[0]+20,self.pos[1]+60,self.pos[0]+40,self.pos[1]
+                Triangle:
+                    points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+60,self.pos[0]+40,self.pos[1]
+
+        Widget:
+            id: stone2
+            size: 50,25
+            pos: 525,525
+            canvas:
+                Color:
+                    rgba: 1,1,1,1
+                Triangle:
+                    points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]-60,self.pos[0]+40,self.pos[1]
+        Widget:
+            id: polka
+            size: 250,25
+            pos: root.width*2,300
+            canvas:
+                Color:
+                    rgba: 1,1,1,1
+                Rectangle:
+                    size:self.size
+                    pos:self.pos
+        Button:
+            size: root.width, root.top
+            background_color: 1,1,1,0
+            on_press:  root.press()
+
+        Label:
+            id: mess
+            text: ""
+            font_size: 50
+            pos: 200,300
+
+    Button:
+        id: go
+        text:'GO'
+        size: 300,200
+        background_color: 1,0,1,0.7
+        pos: 250,250
+        on_press:root.go()
