@@ -27,20 +27,21 @@ class Game(Widget):
 
     # движение карты
     def move(self,fps):
-        stone1 = self.ids["stone"]
-        stone2 = self.ids["stone2"]
-        if stone1.pos[0] <=0 :
-            stone1.pos[0] = randint(self.right, self.right+300)
-        if stone2.pos[0] <= 0:
-            stone2.pos[0] = randint(self.right, self.right + 300)
-        stone1.pos[0] -= 5
-        stone2.pos[0] -= 5
-        if self.ids["person"].collide_widget(stone1) or self.ids["person"].collide_widget(stone2):
-            print("11111")
-            self.ids['mess'].text = "Провал"
-            Clock.schedule_interval(self.die, 1.0 / 60.0)
-            self.add_widget(Button(text = "Return", on_press = self.repet))
-            return False
+        person = self.ids["person"]
+        stons = [self.ids["stone"],self.ids["stone2"],self.ids["stone3"],self.ids["stone4"],self.ids["stone5"],self.ids["stone6"],self.ids["polka"]]
+
+        for i in stons:
+            i.pos[0] -= 5
+
+            if i.pos[0] < -1000:
+                i.pos[0] = randint(800,1500)
+            if person.collide_widget(i):
+                print("11111")
+                print(i.pos)
+                self.ids['mess'].text = "Провал"
+                Clock.schedule_interval(self.die, 1.0 / 60.0)
+                self.add_widget(Button(text = "Return", on_press = self.repet))
+                return False
         # print(self.ids["stone"].pos,"  ",self.ids["person"].pos) #позиции объектов
 
     # По нажатию на экран персонаж начинает движение

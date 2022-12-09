@@ -15,6 +15,7 @@
             Rectangle:
                 size: 25,25
                 pos: self.pos
+                source:'person.png'
             Rotate:
                 angle: 360-self.rotate
                 origin: self.center
@@ -29,53 +30,117 @@
             Line:
                 points: 0, 525,root.width, 525
 
+
     Label:
-        id: stons
-        Label:
-            id: stone
-            size: 50,25
-            pos: 500,50
+        id: stone
+        size: 50, 90
+        pos: 500,50
 
-            canvas:
-                Color:
-                    rgba: 1,1,1,1
+        canvas:
+            Color:
+                rgba: 1,1,1,1
 
-                Triangle:
-                    points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+60,self.pos[0]+40,self.pos[1]
-                Triangle:
-                    points:self.pos[0]*,self.pos[1],self.pos[0]+20,self.pos[1]+60,self.pos[0]+40,self.pos[1]
-                Triangle:
-                    points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+60,self.pos[0]+40,self.pos[1]
+            Triangle:
+                points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+self.size[1],self.pos[0]+40,self.pos[1]
 
-        Widget:
-            id: stone2
-            size: 50,25
-            pos: 525,525
-            canvas:
-                Color:
-                    rgba: 1,1,1,1
-                Triangle:
-                    points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]-60,self.pos[0]+40,self.pos[1]
-        Widget:
-            id: polka
-            size: 250,25
-            pos: root.width*2,300
-            canvas:
-                Color:
-                    rgba: 1,1,1,1
-                Rectangle:
-                    size:self.size
-                    pos:self.pos
-        Button:
-            size: root.width, root.top
-            background_color: 1,1,1,0
-            on_press:  root.press()
+    Widget:
+        id: stone2
+        size: 50,80
+        pos: 525,525
+        canvas:
+            Color:
+                rgba: 1,1,1,1
+            Triangle:
+                points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]-self.size[1],self.pos[0]+40,self.pos[1]
 
-        Label:
-            id: mess
-            text: ""
-            font_size: 50
-            pos: 200,300
+    Widget:
+        id: stone3
+        size: 50,120
+        pos: 725,525
+        canvas:
+            Color:
+                rgba: 1,1,1,1
+            Triangle:
+                points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]-self.size[1],self.pos[0]+40,self.pos[1]
+
+    Label:
+        id: stone4
+        size: 50 ,70
+        pos: 700,50
+
+        canvas:
+            Color:
+                rgba: 1,1,1,1
+
+            Triangle:
+                points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+self.size[1],self.pos[0]+40,self.pos[1]
+    Label:
+        id: stone5
+        size: 50 ,150
+        pos: 1200,50
+
+        canvas:
+            Color:
+                rgba: 1,0,1,1
+
+            Triangle:
+                points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+self.size[1],self.pos[0]+40,self.pos[1]
+    Label:
+        id: stone6
+        size: 50 ,100
+        pos: 1100,50
+        canvas:
+            Color:
+                rgba: 1,0,0,1
+            Triangle:
+                points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]+self.size[1],self.pos[0]+40,self.pos[1]
+    Widget:
+        id: stone7
+        size: 50,300
+        pos: 1025,525
+        canvas:
+            Color:
+                rgba: 1,1,1,1
+            Triangle:
+                points:self.pos[0],self.pos[1],self.pos[0]+20,self.pos[1]-self.size[1],self.pos[0]+40,self.pos[1]
+    Widget:
+        id: polka
+        size: 250,25
+        pos: 1500,300
+        canvas:
+            Rectangle:
+                size:self.size
+                pos:self.pos
+            Color:
+                rgba: 204/255, 202/255, 196/255,1
+
+            Triangle:
+                points:self.pos[0],self.pos[1]+self.size[1],self.pos[0]+20,self.pos[1]+self.size[1]+20,self.pos[0]+40,self.pos[1]+self.size[1]
+            Triangle:
+                points:self.pos[0]+40,self.pos[1]+self.size[1],self.pos[0]+20+40,self.pos[1]+20+self.size[1],self.pos[0]+40+40,self.pos[1]+self.size[1]
+            Triangle:
+                points:self.pos[0]+110,self.pos[1]+self.size[1],self.pos[0]+50+110,self.pos[1]+self.size[1]+20,self.pos[0]+210,self.pos[1]+self.size[1]
+            Triangle:
+                points:self.pos[0]+60,self.pos[1]+self.size[1],self.pos[0]+20+60,self.pos[1]+20+self.size[1],self.pos[0]+60,self.pos[1]+self.size[1]
+
+            Triangle:
+                points:self.pos[0]+10,self.pos[1],self.pos[0]+20+10,self.pos[1]-20,self.pos[0]+40+10,self.pos[1]
+            Triangle:
+                points:self.pos[0]+50,self.pos[1],self.pos[0]+20+50,self.pos[1]-20,self.pos[0]+40+50,self.pos[1]
+            Triangle:
+                points:self.pos[0]+100,self.pos[1],self.pos[0]+20+100,self.pos[1]-20,self.pos[0]+40+100,self.pos[1]
+            Triangle:
+                points:self.pos[0]+150,self.pos[1],self.pos[0]+20+150,self.pos[1]-20,self.pos[0]+40+150,self.pos[1]
+    Button:
+        size: root.width, root.top
+        background_color: 1,1,1,0
+        on_press:  root.press()
+
+    Label:
+        id: mess
+        text: ""
+        font_size: 50
+        pos: 200,300
 
     Button:
         id: go
